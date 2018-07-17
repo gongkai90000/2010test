@@ -16,6 +16,7 @@ import pymongo
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from var_dump import var_dump
 
 # 如果安装了seaborn则设置为白色风格
 try:
@@ -660,7 +661,8 @@ class BacktestingEngine(object):
                                                exitTrade.price, exitTrade.dt,
                                                closedVolume, self.rate, self.slippage, self.size)
                         resultList.append(result)
-                        
+
+
                         posList.extend([1,0])
                         tradeTimeList.extend([result.entryDt, result.exitDt])
 
@@ -726,8 +728,11 @@ class BacktestingEngine(object):
         winningResult = 0       # 盈利次数
         losingResult = 0        # 亏损次数		
         totalWinning = 0        # 总盈利金额		
-        totalLosing = 0         # 总亏损金额        
-        
+        totalLosing = 0         # 总亏损金额
+
+
+
+
         for result in resultList:
             capital += result.pnl
             maxCapital = max(capital, maxCapital)
@@ -784,7 +789,7 @@ class BacktestingEngine(object):
         d['posList'] = posList
         d['tradeTimeList'] = tradeTimeList
         d['resultList'] = resultList
-        
+        var_dump(resultList);
         return d
         
     #----------------------------------------------------------------------
@@ -809,7 +814,8 @@ class BacktestingEngine(object):
         self.output(u'盈利交易平均值\t%s' %formatNumber(d['averageWinning']))
         self.output(u'亏损交易平均值\t%s' %formatNumber(d['averageLosing']))
         self.output(u'盈亏比：\t%s' %formatNumber(d['profitLossRatio']))
-    
+
+
         # 绘图
         fig = plt.figure(figsize=(10, 16))
         
@@ -1042,7 +1048,7 @@ class BacktestingEngine(object):
             'returnStd': returnStd,
             'sharpeRatio': sharpeRatio
         }
-        
+
         return df, result
     
     #----------------------------------------------------------------------
