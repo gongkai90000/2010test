@@ -527,6 +527,13 @@ class ArrayManager(object):
         if array:
             return result
         return result[-1]
+
+    def smaco(self, n, array=False):
+        """简单均线"""
+        result = talib.SMA((self.close+self.open)/2, n)
+        if array:
+            return result
+        return result[-1]
         
     #----------------------------------------------------------------------
     def std(self, n, array=False):

@@ -150,7 +150,55 @@ class WHMikeStrategy(CtaTemplate):
         self.atrValue = am.atr(self.atrWindow)
         
         # 判断是否要进行交易
-    
+        # mike add sma #
+        # NN1:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,47),1));#
+        nn1=am.smaco(47)
+        #NN2:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,31),1));#
+        nn2=am.smaco(31)
+        #NN3:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,34),1));
+        nn3=am.smaco(34)
+        #
+        #MAXM:=MAX(NN1, NN2);
+        #MAX0:=MAX(MAXM, NN3);
+        #
+        max0=[nn1,nn2,nn3]
+        #
+        #MINM:=MIN(NN1,NN2);
+        #MIN0:=MIN(MINM,NN3);
+        #
+        min0=[nn1,nn2,nn3]
+        #KEY:=(MAX0+MIN0)/2;//
+        mkey=(max0-min0)/2
+        #MA1:=MA(C,143);
+        ma1=am.sma(143,1)
+        xnum=7
+        mnum=2
+
+        if (len(ma1)<xnum):
+            return
+        #DIFF:=HHV(MA1,7)-LLV(MA1,2);
+        xarr=[]
+        for num1 in range(-1,xnum*-1 ):
+            xarr[num1]=ma1(num1)
+        marr=[]
+        for num2 in range(-1,mnum*-1 ):
+            marr[num2]=ma1(num2)
+        diffma1=max(xarr)-min(marr)
+        #AA:=C>KEY AND C>VALUEWHEN(DATE<>REF(DATE,1),C);
+        if self.am.close>mkey and self.am.close>self.am.close:
+            aa=True
+        else:
+            aa=False
+        #BB:=C<KEY AND C<VALUEWHEN(DATE<>REF(DATE,1),C);
+        if self.am.close<mkey and self.am.close<self.am.close:
+            bb=True
+        else:
+            bb=False
+
+
+
+
+
         # 当前无仓位，发送开仓委托
         if self.pos == 0:
             self.intraTradeHigh = bar.high

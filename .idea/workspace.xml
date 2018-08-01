@@ -10,7 +10,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/2010test$runBacktestingMK.coverage" NAME="runBacktestingMK Coverage Results" MODIFIED="1531549327183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/CtaBacktesting" />
+    <SUITE FILE_PATH="coverage/2010test$ctaLineBar.coverage" NAME="ctaLineBar Coverage Results" MODIFIED="1532320238335" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vnpy/trader/gateway/ctaAlgo/tools" />
+    <SUITE FILE_PATH="coverage/2010test$runBacktestingMK.coverage" NAME="runBacktestingMK Coverage Results" MODIFIED="1532320979394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/CtaBacktesting" />
     <SUITE FILE_PATH="coverage/2010test$run_simple.coverage" NAME="run_simple Coverage Results" MODIFIED="1531151136962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/VnTrader" />
     <SUITE FILE_PATH="coverage/2010test$runBacktesting.coverage" NAME="runBacktesting Coverage Results" MODIFIED="1531152709334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/CtaBacktesting" />
   </component>
@@ -19,44 +20,53 @@
       <file leaf-file-name="runBacktestingMK.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/CtaBacktesting/runBacktestingMK.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="35" column="31" lean-forward="false" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+            <state relative-caret-position="201">
+              <caret line="26" column="16" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uiBasicWidget.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/vnpy/trader/uiBasicWidget.py">
+      <file leaf-file-name="ctaLineBar.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vnpy/trader/gateway/ctaAlgo/tools/ctaLineBar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-675">
-              <caret line="27" column="21" lean-forward="true" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="376">
+              <caret line="728" column="0" lean-forward="true" selection-start-line="728" selection-start-column="0" selection-end-line="728" selection-end-column="0" />
+              <folding>
+                <element signature="e#55#79#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strategyWHMike.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="strategyWHMike.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyWHMike.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="137" column="4" lean-forward="false" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
+            <state relative-caret-position="266">
+              <caret line="217" column="12" lean-forward="true" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
               <folding>
-                <marker date="1532063870026" expanded="true" signature="639:6045" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="2943:3195" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="3295:3396" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="3495:3596" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="3701:3771" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="3874:3938" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="4049:5677" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="4462:4501" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="4527:4847" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="4896:5161" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="5210:5476" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="5707:5754" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="5861:5904" ph="..." />
-                <marker date="1532063870026" expanded="true" signature="6012:6045" ph="..." />
+                <element signature="e#204#235#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strategyKingKeltner.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyKingKeltner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="121" column="16" lean-forward="true" selection-start-line="121" selection-start-column="16" selection-end-line="121" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ctaTemplate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/ctaTemplate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="587" column="8" lean-forward="false" selection-start-line="587" selection-start-column="8" selection-end-line="587" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,6 +76,11 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>BollChannelStrategy</find>
+      <find>onXminBar</find>
+      <find>bollWindow</find>
+      <find>self.sma</find>
+      <find>inputRsiLen</find>
+      <find>boll</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -75,8 +90,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyWHMike.py" />
         <option value="$PROJECT_DIR$/examples/CtaBacktesting/runBacktestingMK.py" />
+        <option value="$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/ctaTemplate.py" />
+        <option value="$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyWHMike.py" />
       </list>
     </option>
   </component>
@@ -87,10 +103,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-10" />
-    <option name="y" value="2" />
-    <option name="width" value="1938" />
-    <option name="height" value="1028" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1942" />
+    <option name="height" value="1042" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -173,6 +189,30 @@
               <item name="ctaStrategy" type="462c0819:PsiDirectoryNode" />
               <item name="strategy" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="2010test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2010test" type="462c0819:PsiDirectoryNode" />
+              <item name="vnpy" type="462c0819:PsiDirectoryNode" />
+              <item name="trader" type="462c0819:PsiDirectoryNode" />
+              <item name="gateway" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="2010test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2010test" type="462c0819:PsiDirectoryNode" />
+              <item name="vnpy" type="462c0819:PsiDirectoryNode" />
+              <item name="trader" type="462c0819:PsiDirectoryNode" />
+              <item name="gateway" type="462c0819:PsiDirectoryNode" />
+              <item name="ctaAlgo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="2010test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="2010test" type="462c0819:PsiDirectoryNode" />
+              <item name="vnpy" type="462c0819:PsiDirectoryNode" />
+              <item name="trader" type="462c0819:PsiDirectoryNode" />
+              <item name="gateway" type="462c0819:PsiDirectoryNode" />
+              <item name="ctaAlgo" type="462c0819:PsiDirectoryNode" />
+              <item name="tools" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -202,6 +242,24 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.runBacktestingMK">
+    <configuration name="ctaLineBar" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/vnpy/trader/gateway/ctaAlgo/tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="2010test" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vnpy/trader/gateway/ctaAlgo/tools/ctaLineBar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="runBacktesting" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -256,16 +314,18 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.run_simple" />
       <item index="1" class="java.lang.String" itemvalue="Python.runBacktesting" />
       <item index="2" class="java.lang.String" itemvalue="Python.runBacktestingMK" />
+      <item index="3" class="java.lang.String" itemvalue="Python.ctaLineBar" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Python.runBacktestingMK" />
-        <item index="1" class="java.lang.String" itemvalue="Python.runBacktesting" />
-        <item index="2" class="java.lang.String" itemvalue="Python.run_simple" />
+        <item index="1" class="java.lang.String" itemvalue="Python.ctaLineBar" />
+        <item index="2" class="java.lang.String" itemvalue="Python.runBacktesting" />
+        <item index="3" class="java.lang.String" itemvalue="Python.run_simple" />
       </list>
     </recent_temporary>
   </component>
@@ -283,7 +343,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-10" y="2" width="1938" height="1028" extended-state="1" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -293,11 +353,12 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25052193" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18098511" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -375,6 +436,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-324">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -406,20 +468,7 @@
         <state relative-caret-position="27">
           <caret line="137" column="4" lean-forward="true" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
           <folding>
-            <marker date="1532063870026" expanded="true" signature="639:6045" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="2943:3195" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3295:3396" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3495:3596" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3701:3771" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3874:3938" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4049:5677" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4462:4501" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4527:4847" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4896:5161" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5210:5476" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5707:5754" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5861:5904" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="6012:6045" ph="..." />
+            <element signature="e#204#235#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -436,6 +485,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -468,43 +518,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyKingKeltner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyWHMike.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="137" column="4" lean-forward="false" selection-start-line="137" selection-start-column="4" selection-end-line="137" selection-end-column="4" />
-          <folding>
-            <marker date="1532063870026" expanded="true" signature="639:6045" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="2943:3195" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3295:3396" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3495:3596" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3701:3771" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="3874:3938" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4049:5677" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4462:4501" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4527:4847" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="4896:5161" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5210:5476" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5707:5754" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="5861:5904" ph="..." />
-            <marker date="1532063870026" expanded="true" signature="6012:6045" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/ctaTemplate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyMultiSignal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5346">
@@ -512,18 +525,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/CtaBacktesting/runBacktestingMK.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="35" column="31" lean-forward="false" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyBollChannel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1728">
           <caret line="121" column="0" lean-forward="true" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -532,6 +538,50 @@
         <state relative-caret-position="-675">
           <caret line="27" column="21" lean-forward="true" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/CtaBacktesting/runBacktestingMK.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="26" column="16" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vnpy/trader/gateway/ctaAlgo/tools/ctaLineBar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="728" column="0" lean-forward="true" selection-start-line="728" selection-start-column="0" selection-end-line="728" selection-end-column="0" />
+          <folding>
+            <element signature="e#55#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyKingKeltner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="121" column="16" lean-forward="true" selection-start-line="121" selection-start-column="16" selection-end-line="121" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/ctaTemplate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="587" column="8" lean-forward="false" selection-start-line="587" selection-start-column="8" selection-end-line="587" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vnpy/trader/app/ctaStrategy/strategy/strategyWHMike.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="217" column="12" lean-forward="true" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
+          <folding>
+            <element signature="e#204#235#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
