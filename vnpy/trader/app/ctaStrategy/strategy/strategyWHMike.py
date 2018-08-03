@@ -17,7 +17,7 @@
 """
 
 from __future__ import division
-
+from var_dump import var_dump
 from vnpy.trader.vtObject import VtBarData
 from vnpy.trader.vtConstant import EMPTY_STRING
 from vnpy.trader.app.ctaStrategy.ctaTemplate import (CtaTemplate, 
@@ -143,7 +143,10 @@ class WHMikeStrategy(CtaTemplate):
         
         if not am.inited:
             return
-        
+        #var_dump(self)
+        #var_dump(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
+        #var_dump(bar)
+        #exit()
         # 计算指标数值
         self.bollUp, self.bollDown = am.boll(self.bollWindow, self.bollDev)
         self.cciValue = am.cci(self.cciWindow)
@@ -162,13 +165,15 @@ class WHMikeStrategy(CtaTemplate):
         #MAX0:=MAX(MAXM, NN3);
         #
         max0=[nn1,nn2,nn3]
+        maxa=max(max0)
         #
         #MINM:=MIN(NN1,NN2);
         #MIN0:=MIN(MINM,NN3);
         #
         min0=[nn1,nn2,nn3]
+        mina=min(min0)
         #KEY:=(MAX0+MIN0)/2;//
-        mkey=(max0-min0)/2
+        mkey=(maxa-mina)/2
         #MA1:=MA(C,143);
         ma1=am.sma(143,1)
         xnum=7
@@ -178,19 +183,26 @@ class WHMikeStrategy(CtaTemplate):
             return
         #DIFF:=HHV(MA1,7)-LLV(MA1,2);
         xarr=[]
-        for num1 in range(-1,xnum*-1 ):
-            xarr[num1]=ma1(num1)
+        xarr.append(ma1[-1])
+        xarr.append(ma1[-2])
+        xarr.append(ma1[-3])
+        xarr.append(ma1[-4])
+        xarr.append(ma1[-5])
+        xarr.append(ma1[-6])
+        xarr.append(ma1[-7])
+
         marr=[]
-        for num2 in range(-1,mnum*-1 ):
-            marr[num2]=ma1(num2)
+        marr.append(ma1[-1])
+        marr.append(ma1[-2])
+
         diffma1=max(xarr)-min(marr)
         #AA:=C>KEY AND C>VALUEWHEN(DATE<>REF(DATE,1),C);
-        if self.am.close>mkey and self.am.close>self.am.close:
+        if [self.am.close>mkey]:
             aa=True
         else:
             aa=False
         #BB:=C<KEY AND C<VALUEWHEN(DATE<>REF(DATE,1),C);
-        if self.am.close<mkey and self.am.close<self.am.close:
+        if [self.am.close<mkey]:
             bb=True
         else:
             bb=False
