@@ -51,6 +51,18 @@ class WHMikeStrategy(CtaTemplate):
     longStop = 0                        # 多头止损
     shortStop = 0                       # 空头止损
 
+    firstN1 = 0                         #找到第一个n1
+    firstN2 = 0                         #找到第一个n2
+    firstN3 = 0                         #找到第一个n3
+    firstC  = 0                         #找到第一个c
+    bkprice = 0                         #返回最近一次模型买开位置的买开信号价位。
+    skprice = 0                         #返回最近一次模型卖开位置的卖开信号价位。
+    barssk = 0                          #返回上一次卖开仓的K线距离当前K线的周期数（不包含出现SK信号的那根K线）；发出SK信号的当根k线BARSSK返回空值
+    barsbk = 0                          #返回上一次买开仓的K线距离当前K线的周期数（不包含出现BK信号的那根K线）；发出BK信号的当根k线BARSBK返回空值
+    bkhigh  = 0                         #BKHIGH 买开仓以来的最高价
+    sklow  = 0                          #卖开仓以来最低值
+
+
     # 参数列表，保存了参数的名称
     paramList = ['name',
                  'className',
@@ -196,48 +208,110 @@ class WHMikeStrategy(CtaTemplate):
         marr.append(ma1[-2])
 
         diffma1=max(xarr)-min(marr)
+        if [self.firstC<1]:
+            self.firstC=bar.close
+
+
+
         #AA:=C>KEY AND C>VALUEWHEN(DATE<>REF(DATE,1),C);
-        if [self.am.close>mkey]:
+        if [bar.close>mkey and bar.close>self.firstC]:
             aa=True
         else:
             aa=False
         #BB:=C<KEY AND C<VALUEWHEN(DATE<>REF(DATE,1),C);
-        if [self.am.close<mkey]:
+        if [bar.close<mkey and bar.close<self.firstC]:
             bb=True
         else:
             bb=False
-
-
-
 
 
         # 当前无仓位，发送开仓委托
         if self.pos == 0:
             self.intraTradeHigh = bar.high
             self.intraTradeLow = bar.low            
-            
-            if self.cciValue > 0:
-                self.buy(self.bollUp, self.fixedSize, True)
+
+            #if self.cciValue > 0:
+            #    self.buy(self.bollUp, self.fixedSize, True)
                 
-            elif self.cciValue < 0:
+            #elif self.cciValue < 0:
+            #    self.short(self.bollDown, self.fixedSize, True)
+
+            #AA && C-KEY<0.01*208*C/100 && DIFF<0.01*72*C/1000,BK;
+            #BB && KEY-C<0.01*49*C/100 && DIFF<0.01*N5*C/1000,SK;
+
+            if [aa and bar.close-mkey<0.01*208*bar.close/100 and diffma1<0.01*72*bar.close/1000]:
+                self.buy(self.bollUp, self.fixedSize, True)
+                self.bkprice=bar.close
+
+            elif [bb and mkey-bar.close<0.01*49*bar.close/100 and diffma1<0.01*555*bar.close/1000]:
                 self.short(self.bollDown, self.fixedSize, True)
-    
+                self.skprice=bar.close
+
+
+
+        #用法:BKPRICE返回最近一次模型买开位置的买开信号价位。
+        #SKPRICE返回最近一次模型卖开位置的卖开信号价位。
+
+#（1）当模型存在连续多个开仓信号(加仓)的情况下，该函数返回的是最后一次开仓信号的价格,而不是开仓均价。
+
+#（2）模组运行环境，返回的是SK(SPK)信号发出时的行情的最新价（可以与模组运行界面中“信号记录”中的SK(SPK)信号对应的“当时最新价”比较）。SK信号发出并且已经确认固定后，SKPRICE的值更新为信号发出时的行情的最新价
+
+#BARSSK返回上一次卖开仓的K线距离当前K线的周期数（不包含出现SK信号的那根K线）；发出SK信号的当根k线BARSSK返回空值
+
+#BARSBK返回上一次买开仓的K线距离当前K线的周期数（不包含出现BK信号的那根K线）；发出BK信号的当根k线BARSBK返回空值
+
         # 持有多头仓位
         elif self.pos > 0:
             self.intraTradeHigh = max(self.intraTradeHigh, bar.high)
             self.intraTradeLow = bar.low
+            self.bkhigh=self.intraTradeHigh
+            self.sklow=self.intraTradeLow
             self.longStop = self.intraTradeHigh - self.atrValue * self.slMultiplier
-            
-            self.sell(self.longStop, abs(self.pos), True)
-    
+            self.barsbk=self.barsbk+1
+            # AA && (SKPRICE-C>0 OR SKPRICE-C<-1*(C/100)) AND BARSSK>1,BP;
+            if [aa and (self.skprice - bar.close >0 or self.skprice-bar.close<-1*(bar.close/100)) and self.barssk>1]:
+                self.sell(self.longStop, abs(self.pos), True)
+                self.barsbk=0
+            # C > SKLOW * (1 + 0.001 * 35), BP;
+            if [bar.close > self.sklow * (1 + 0.001 * 35)]:
+                self.sell(self.longStop, abs(self.pos), True)
+                self.barsbk = 0
+            #C < SKPRICE * (1 - 0.001 * 91), BP;
+            if [bar.close < self.skprice * (1 - 0.001 * 91)]:
+                self.sell(self.longStop, abs(self.pos), True)
+                self.barsbk = 0
+
         # 持有空头仓位
         elif self.pos < 0:
             self.intraTradeHigh = bar.high
             self.intraTradeLow = min(self.intraTradeLow, bar.low)
+            self.bkhigh = self.intraTradeHigh
+            self.sklow = self.intraTradeLow
             self.shortStop = self.intraTradeLow + self.atrValue * self.slMultiplier
-            
-            self.cover(self.shortStop, abs(self.pos), True)
-            
+            self.barssk=self.barssk+1
+            # BB && (C-BKPRICE>0 OR C-BKPRICE<-1*(C/100)) AND BARSBK>37,SP;
+            if [bb and (bar.close-self.bkprice>0 or bar.close-self.bkprice<-1*(bar.close/100)) and self.barsbk>37]:
+                self.cover(self.shortStop, abs(self.pos), True)
+                self.barssk = 0
+            # C < BKHIGH * (1 - 0.001 * 40), SP;
+            if [bar.close < self.bkhigh * (1 - 0.001 * 40)]:
+                self.sell(self.longStop, abs(self.pos), True)
+                self.barssk = 0
+            # C > BKPRICE * (1 + 0.001 * 85), SP
+            if [bar.close > self.bkprice * (1 + 0.001 * 85)]:
+                self.sell(self.longStop, abs(self.pos), True)
+                self.barssk = 0
+
+            #BKHIGH 买开仓以来的最高价
+        #C >= SKPRICE * (1 + 0.0001 * 130), BP; //
+        #C <= BKPRICE * (1 - 0.0001 * 185), SP; //
+
+
+
+        #SETALLSIGPRICETYPE(PRICE) 市价委托
+
+
+
         # 同步数据到数据库
         self.saveSyncData()        
     
