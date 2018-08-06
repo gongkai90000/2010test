@@ -239,13 +239,24 @@ class WHMikeStrategy(CtaTemplate):
             #AA && C-KEY<0.01*208*C/100 && DIFF<0.01*72*C/1000,BK;
             #BB && KEY-C<0.01*49*C/100 && DIFF<0.01*N5*C/1000,SK;
 
-            if [aa and bar.close-mkey<0.01*208*bar.close/100 and diffma1<0.01*72*bar.close/1000]:
+            ifbuyb=bar.close-mkey<0.01*208*bar.close/100
+            ifbuyc=diffma1<0.01*72*bar.close/1000
+            ifbuyd=self.barsbk < 1
+
+            ifsellb=mkey-bar.close<0.01*49*bar.close/100
+            ifsellc=diffma1<0.01*555*bar.close/1000
+            ifselld=self.barssk < 1
+            if aa and ifbuyb and ifbuyc:
                 self.buy(self.bollUp, self.fixedSize, True)
                 self.bkprice=bar.close
+                self.barsbk = 1
 
-            elif [bb and mkey-bar.close<0.01*49*bar.close/100 and diffma1<0.01*555*bar.close/1000]:
+
+
+            elif bb and ifsellb and ifsellc:
                 self.short(self.bollDown, self.fixedSize, True)
                 self.skprice=bar.close
+                self.barssk = 1
 
 
 
