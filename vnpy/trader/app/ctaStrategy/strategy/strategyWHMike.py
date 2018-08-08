@@ -17,6 +17,8 @@
 """
 
 from __future__ import division
+
+from datetime import datetime
 from var_dump import var_dump
 from vnpy.trader.vtObject import VtBarData
 from vnpy.trader.vtConstant import EMPTY_STRING
@@ -187,6 +189,10 @@ class WHMikeStrategy(CtaTemplate):
         #KEY:=(MAX0+MIN0)/2;//
         mkey=(maxa-mina)/2
         #MA1:=MA(C,143);
+        gh=am.sma(143)
+        if gh>0:
+            gh11=989
+
         ma1=am.sma(143,1)
         xnum=7
         mnum=2
@@ -208,6 +214,7 @@ class WHMikeStrategy(CtaTemplate):
         marr.append(ma1[-2])
 
         diffma1=max(xarr)-min(marr)
+        diffma2=float(diffma1)
         if [self.firstC<1]:
             self.firstC=bar.close
 
@@ -223,7 +230,9 @@ class WHMikeStrategy(CtaTemplate):
             bb=True
         else:
             bb=False
-
+        bcb=datetime.strptime("2017-05-11 14:15:00", "%Y-%m-%d %H:%M:%S")
+        if bar.datetime == bcb:
+            bbb=0
 
         # 当前无仓位，发送开仓委托
         if self.pos == 0:
