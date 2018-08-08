@@ -17,8 +17,9 @@
 """
 
 from __future__ import division
-
+import numpy as np
 from datetime import datetime
+import talib as ta
 from var_dump import var_dump
 from vnpy.trader.vtObject import VtBarData
 from vnpy.trader.vtConstant import EMPTY_STRING
@@ -63,6 +64,7 @@ class WHMikeStrategy(CtaTemplate):
     barsbk = 0                          #返回上一次买开仓的K线距离当前K线的周期数（不包含出现BK信号的那根K线）；发出BK信号的当根k线BARSBK返回空值
     bkhigh  = 0                         #BKHIGH 买开仓以来的最高价
     sklow  = 0                          #卖开仓以来最低值
+    line143 = []                        #143均线追述
 
 
     # 参数列表，保存了参数的名称
@@ -189,9 +191,24 @@ class WHMikeStrategy(CtaTemplate):
         #KEY:=(MAX0+MIN0)/2;//
         mkey=(maxa-mina)/2
         #MA1:=MA(C,143);
-        gh=am.sma(143)
-        if gh>0:
-            gh11=989
+        if bar.close>0:
+            self.line143.append(bar.close)
+
+        if self.line143.__len__() < 144:
+            return
+
+        del self.line143[0]
+        self.line143.append(bar.close)
+
+        p=np.array(self.line143)
+        s = ta.SMA(p, 143)
+
+        if s[-6]>0:
+            print("###########################################")
+            print(s[-1])
+            print("###########################################")
+        else:
+            print(bar.datetime)
 
         ma1=am.sma(143,1)
         xnum=7
