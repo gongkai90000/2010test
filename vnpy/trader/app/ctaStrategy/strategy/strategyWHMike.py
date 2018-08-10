@@ -197,20 +197,15 @@ class WHMikeStrategy(CtaTemplate):
         if self.line143.__len__() < 144:
             return
 
-        del self.line143[0]
+        #del self.line143[0]
         self.line143.append(bar.close)
 
         p=np.array(self.line143)
-        s = ta.SMA(p, 143)
+        ma1 = ta.SMA(p, 143)
 
-        if s[-6]>0:
-            print("###########################################")
-            print(s[-1])
-            print("###########################################")
-        else:
-            print(bar.datetime)
+   
 
-        ma1=am.sma(143,1)
+        #ma1=am.sma(143,1)
         xnum=7
         mnum=2
 
