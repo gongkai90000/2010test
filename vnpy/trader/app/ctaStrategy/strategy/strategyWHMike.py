@@ -203,7 +203,7 @@ class WHMikeStrategy(CtaTemplate):
         p=np.array(self.line143)
         ma1 = ta.SMA(p, 143)
 
-   
+
 
         #ma1=am.sma(143,1)
         xnum=7
