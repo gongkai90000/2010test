@@ -13,4 +13,4 @@ tempData = re.search('''(")(.+)(")''', stdoutInfo).group(2)
 stockInfo = tempData.split(",")
 print stockInfo[0].decode("gbk")
 
-#http://www.360doc.com/content/14/0304/12/1944636_357602232.shtml
+#http://blog.sina.com.cn/s/blog_4cf8aad30102eiog.html
