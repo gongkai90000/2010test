@@ -50,8 +50,10 @@ with open("WEB_setting.json") as f:
 
 # 创建Flask对象
 from flask import Flask, send_file
-from flask.ext.restful import Api, Resource, reqparse
-from flask.ext.socketio import SocketIO
+#from flask.ext.restful import Api, Resource, reqparse
+#from flask.ext.socketio import SocketIO
+from flask_restful import Api, Resource, reqparse
+from flask_socketio import SocketIO
 from flask_cors import *
 
 app = Flask(__name__)
