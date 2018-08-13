@@ -65,7 +65,8 @@ class WHMikeStrategy(CtaTemplate):
     bkhigh  = 0                         #BKHIGH 买开仓以来的最高价
     sklow  = 0                          #卖开仓以来最低值
     line143 = []                        #143均线追述
-
+    nowline143 = 0                      #最后一个143的值
+    nowdate = ''                        #当前时间
 
     # 参数列表，保存了参数的名称
     paramList = ['name',
@@ -84,6 +85,16 @@ class WHMikeStrategy(CtaTemplate):
     varList = ['inited',
                'trading',
                'pos',
+               'firstN1',
+               'firstN2',
+               'firstN3',
+               'firstC',
+               'bkprice',
+               'skprice',
+               'barssk',
+               'barsbk',
+               'bkhigh',
+               'nowdate',
                'bollUp',
                'bollDown',
                'cciValue',
@@ -198,6 +209,8 @@ class WHMikeStrategy(CtaTemplate):
             return
 
         #del self.line143[0]
+        self.nowline143=self.line143[-1]
+        self.nowdate=bar.datetime
         self.line143.append(bar.close)
 
         p=np.array(self.line143)

@@ -6,7 +6,7 @@
 import re
 import urllib
 
-dataUrl = "http://hq.sinajs.cn/list=RM1901"
+dataUrl = "http://hq.sinajs.cn/list=AP1901"
 stdout = urllib.urlopen(dataUrl)
 stdoutInfo = stdout.read()
 tempData = re.search('''(")(.+)(")''', stdoutInfo).group(2)

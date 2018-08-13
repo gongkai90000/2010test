@@ -16,4 +16,11 @@
         "className": "KkStrategy",
         "vtSymbol": "IH1802"
     }
+    ,
+
+    {
+        "name": "mikegong",
+        "className": "WHMikeStrategy",
+        "vtSymbol": "rb1810"
+    }
 ]
