@@ -60,8 +60,8 @@ def downMinuteBarBySymbol(symbol):
 
     cl = db[symbol]
     cl.ensure_index([('datetime', ASCENDING)], unique=True)         # 添加索引
-    
-    df = ts.bar(symbol, freq='1min')
+    cons = ts.get_apis()
+    df = ts.bar(symbol, conn=cons, asset='X', freq='1min')
     df = df.sort_index()
     
     for ix, row in df.iterrows():
@@ -72,7 +72,7 @@ def downMinuteBarBySymbol(symbol):
 
     end = time()
     cost = (end - start) * 1000
-
+    ts.close_apis(cons)
     print(u'合约%s数据下载完成%s - %s，耗时%s毫秒' %(symbol, df.index[0], df.index[-1], cost))
 
     
