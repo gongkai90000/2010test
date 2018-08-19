@@ -26,6 +26,9 @@ from vnpy.trader.vtConstant import EMPTY_STRING
 from vnpy.trader.app.ctaStrategy.ctaTemplate import (CtaTemplate, 
                                                      BarGenerator, 
                                                      ArrayManager)
+import requests
+import os
+import csv
 
 
 ########################################################################
@@ -67,6 +70,10 @@ class WHMikeStrategy(CtaTemplate):
     line143 = []                        #143均线追述
     nowline143 = 0                      #最后一个143的值
     nowdate = ''                        #当前时间
+    coarray = []                        #co的array
+    carray = []                         #c的array
+    csvfile="csvfile.csv"               #历史存储csv
+    future_code = 'M0'                  #历史的品种
 
     # 参数列表，保存了参数的名称
     paramList = ['name',
@@ -117,7 +124,32 @@ class WHMikeStrategy(CtaTemplate):
         self.bg = BarGenerator(self.onBar, 15, self.onXminBar)        # 创建K线合成器对象
         self.bg30 = BarGenerator(self.onBar, 30, self.on30minBar)
         self.am = ArrayManager()
-        
+
+
+        gg = os.path.exists(self.future_code + self.csvfile)
+        gg = False
+        if gg:
+            with open(self.future_code + self.csvfile) as cf:
+                lines = csv.reader(cf)
+                for line in lines:
+                    print(line)
+                    self.coarray.insert(0.(line[4]+line[1])/2)
+                    self.line143.insert(0, line[4])
+        else:
+            #self.future_code = 'M0'
+            url_str = (
+            'http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=' + self.future_code)
+            r = requests.get(url_str)
+            # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=M0
+            r_json = r.json()
+            r_lists = list(r_json)
+            f = open(self.future_code + self.csvfile, 'a+')
+            wf = csv.writer(f)
+            wf.writerows(r_lists)
+            f.close()
+
+            # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0
+
     #----------------------------------------------------------------------
     def on30minBar(self, bar):
         """"""
@@ -180,13 +212,22 @@ class WHMikeStrategy(CtaTemplate):
         self.atrValue = am.atr(self.atrWindow)
         
         # 判断是否要进行交易
+        del(self.coarray[0])
+        self.coarray.append((bar.close+bar.open)/2)
+        cop = np.array(self.coarray)
         # mike add sma #
         # NN1:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,47),1));#
-        nn1=am.smaco(47)
+        #nn1=am.smaco(47)
+        nn1array=ta.SMA(cop, 47)
+        nn1=nn1array[-1]
         #NN2:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,31),1));#
-        nn2=am.smaco(31)
+        #nn2=am.smaco(31)
+        nn2array = ta.SMA(cop, 31)
+        nn2 = nn2array[-1]
         #NN3:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,34),1));
-        nn3=am.smaco(34)
+        #nn3=am.smaco(34)
+        nn3array = ta.SMA(cop, 34)
+        nn3 = nn3array[-1]
         #
         #MAXM:=MAX(NN1, NN2);
         #MAX0:=MAX(MAXM, NN3);
@@ -205,12 +246,14 @@ class WHMikeStrategy(CtaTemplate):
         if bar.close>0:
             self.line143.append(bar.close)
 
+        self.nowdate = bar.datetime
         if self.line143.__len__() < 144:
             return
 
         #del self.line143[0]
+        del(self.line143[0])
         self.nowline143=self.line143[-1]
-        self.nowdate=bar.datetime
+
         self.line143.append(bar.close)
 
         p=np.array(self.line143)

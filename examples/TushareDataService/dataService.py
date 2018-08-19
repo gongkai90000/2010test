@@ -61,8 +61,8 @@ def downMinuteBarBySymbol(symbol):
     cl = db[symbol]
     cl.ensure_index([('datetime', ASCENDING)], unique=True)         # 添加索引
     cons = ts.get_apis()
-    df = ts.bar(symbol, conn=cons, asset='X', freq='1min')
-    df = df.sort_index()
+    df = ts.bar(symbol, conn=cons, freq='1min')
+    #df = df.sort_index()
     
     for ix, row in df.iterrows():
         bar = generateVtBar(row)
