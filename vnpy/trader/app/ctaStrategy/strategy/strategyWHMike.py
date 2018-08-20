@@ -127,18 +127,19 @@ class WHMikeStrategy(CtaTemplate):
 
 
         gg = os.path.exists(self.future_code + self.csvfile)
-        gg = False
+        #gg = False
         if gg:
             with open(self.future_code + self.csvfile) as cf:
                 lines = csv.reader(cf)
                 for line in lines:
-                    print(line)
-                    self.coarray.insert(0.(line[4]+line[1])/2)
+                    vv=(float(line[4])+float(line[1]))/2
+                    self.coarray.insert(0,vv)
                     self.line143.insert(0, line[4])
+                self.writeCtaLog(u'%s装载历史数据成功' % self.name)
+                print(self.coarray)
         else:
             #self.future_code = 'M0'
-            url_str = (
-            'http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=' + self.future_code)
+            url_str = ('http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=' + self.future_code)
             r = requests.get(url_str)
             # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=M0
             r_json = r.json()
@@ -147,6 +148,8 @@ class WHMikeStrategy(CtaTemplate):
             wf = csv.writer(f)
             wf.writerows(r_lists)
             f.close()
+            self.writeCtaLog(u'%s装载历史数据失败重新拉取数据' % self.name)
+
 
             # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0
 
@@ -191,6 +194,7 @@ class WHMikeStrategy(CtaTemplate):
     
     #----------------------------------------------------------------------
     def onXminBar(self, bar):
+        self.writeCtaLog(u'%s onXminBar成功1' % self.name)
         """收到X分钟K线"""
         # 全撤之前发出的委托
         self.cancelAll()
@@ -249,7 +253,7 @@ class WHMikeStrategy(CtaTemplate):
         self.nowdate = bar.datetime
         if self.line143.__len__() < 144:
             return
-
+        self.writeCtaLog(u'%sonXminBar成功2' % self.name)
         #del self.line143[0]
         del(self.line143[0])
         self.nowline143=self.line143[-1]
