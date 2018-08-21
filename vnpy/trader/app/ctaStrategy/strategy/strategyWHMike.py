@@ -329,7 +329,7 @@ class WHMikeStrategy(CtaTemplate):
         if [bar.close<mkey and bar.close<self.firstC]:
             bb=True
         else:
-            bb=False
+            bb=False 
         bcb=datetime.strptime("2017-05-11 14:15:00", "%Y-%m-%d %H:%M:%S")
         if bar.datetime == bcb:
             bbb=0
