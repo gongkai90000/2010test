@@ -248,14 +248,18 @@ class WHMikeStrategy(CtaTemplate):
         #nn1=am.smaco(47)
         nn1array=ta.SMA(cop, 47)
         nn1=nn1array[-1]
+        self.firstN1=nn1
         #NN2:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,31),1));#
         #nn2=am.smaco(31)
         nn2array = ta.SMA(cop, 31)
         nn2 = nn2array[-1]
+        self.firstN2=nn2
         #NN3:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,34),1));
         #nn3=am.smaco(34)
         nn3array = ta.SMA(cop, 34)
         nn3 = nn3array[-1]
+        self.firstN3=nn3
+
         #
         #MAXM:=MAX(NN1, NN2);
         #MAX0:=MAX(MAXM, NN3);
