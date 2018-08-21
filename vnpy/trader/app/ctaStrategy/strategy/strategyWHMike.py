@@ -29,8 +29,9 @@ from vnpy.trader.app.ctaStrategy.ctaTemplate import (CtaTemplate,
 import requests
 import os
 import csv
-
-
+import smtplib
+from email.mime.text import MIMEText
+import time
 ########################################################################
 class WHMikeStrategy(CtaTemplate):
     """基于布林通道的交易策略"""
@@ -74,6 +75,7 @@ class WHMikeStrategy(CtaTemplate):
     carray = []                         #c的array
     csvfile="csvfile.csv"               #历史存储csv
     future_code = 'M0'                  #历史的品种
+
 
     # 参数列表，保存了参数的名称
     paramList = ['name',
@@ -152,7 +154,8 @@ class WHMikeStrategy(CtaTemplate):
 
 
             # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0
-
+        self.sendQmail("strategy whmike start","strategy whmike start")
+        self.writeCtaLog(u'%s发送邮件成功' % self.name)
     #----------------------------------------------------------------------
     def on30minBar(self, bar):
         """"""
@@ -170,7 +173,26 @@ class WHMikeStrategy(CtaTemplate):
 
         self.putEvent()
 
-    #----------------------------------------------------------------------
+    def sendQmail(self,subject,msg):
+        """发送邮件"""
+        _user = "gongkai1000@qq.com"
+        _pwd = "mmrphtjvhvetbjij"
+        _to = "gongkai@dachuizichan.com"
+
+        msg = MIMEText(msg)
+        msg["Subject"] = subject + " "+ time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
+        msg["From"] = _user
+        msg["To"] = _to
+
+        try:
+            s = smtplib.SMTP_SSL("smtp.qq.com", 465)
+            s.login(_user, _pwd)
+            s.sendmail(_user, _to, msg.as_string())
+            s.quit()
+            #print("Success!")
+        except smtplib.SMTPException, e:
+            print ("Falied,%s" % e)
+            #----------------------------------------------------------------------
     def onStart(self):
         """启动策略（必须由用户继承实现）"""
         self.writeCtaLog(u'%s策略启动' %self.name)
@@ -195,7 +217,9 @@ class WHMikeStrategy(CtaTemplate):
     #----------------------------------------------------------------------
     def onXminBar(self, bar):
         self.writeCtaLog(u'%s onXminBar成功1' % self.name)
+        self.sendQmail("15 min ok ",  "ok")
         """收到X分钟K线"""
+
         # 全撤之前发出的委托
         self.cancelAll()
     
@@ -408,7 +432,8 @@ class WHMikeStrategy(CtaTemplate):
         self.saveSyncData()        
     
         # 发出状态更新事件
-        self.putEvent()        
+        self.putEvent()
+
 
     #----------------------------------------------------------------------
     def onOrder(self, order):
