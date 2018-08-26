@@ -140,6 +140,7 @@ class WHMikeStrategy(CtaTemplate):
                 self.writeCtaLog(u'%s装载历史数据成功' % self.name)
                 print(self.coarray)
         else:
+            os.remove(self.future_code + self.csvfile)
             #self.future_code = 'M0'
             url_str = ('http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=' + self.future_code)
             r = requests.get(url_str)
