@@ -647,9 +647,53 @@ class CtaSignal(object):
     def getSignalPos(self):
         """获取信号仓位"""
         return self.signalPos
-        
-        
-        
-        
-    
-    
+
+
+########################################################################
+class TickArrayManager(object):
+    """
+    Tick序列管理工具，负责：
+    1. Tick时间序列的维护
+    2. 常用技术指标的计算
+    """
+
+    # ----------------------------------------------------------------------
+    def __init__(self, size=10):
+        """Constructor"""
+        self.count = 0  # 缓存计数
+        self.size = size  # 缓存大小
+        self.inited = False  # True if count>=size
+
+        self.TicklastPriceArray = np.zeros(self.size)
+        self.TickaskVolume1Array = np.zeros(self.size)
+        self.TickbidVolume1Array = np.zeros(self.size)
+        self.TickaskPrice1Array = np.zeros(self.size)
+        self.TickbidPrice1Array = np.zeros(self.size)
+        self.TickopenInterestArray = np.zeros(self.size)
+        self.TickvolumeArray = np.zeros(self.size)
+
+    # ----------------------------------------------------------------------
+    def updateTick(self, tick):
+        """更新tick Array"""
+        self.count += 1
+        if not self.inited and self.count >= self.size:
+            self.inited = True
+
+        self.TicklastPriceArray[0:self.size - 1] = self.TicklastPriceArray[1:self.size]
+        self.TickaskVolume1Array[0:self.size - 1] = self.TickaskVolume1Array[1:self.size]
+        self.TickbidVolume1Array[0:self.size - 1] = self.TickbidVolume1Array[1:self.size]
+        self.TickaskPrice1Array[0:self.size - 1] = self.TickaskPrice1Array[1:self.size]
+        self.TickbidPrice1Array[0:self.size - 1] = self.TickbidPrice1Array[1:self.size]
+        self.TickopenInterestArray[0:self.size - 1] = self.TickopenInterestArray[1:self.size]
+        self.TickvolumeArray[0:self.size - 1] = self.TickvolumeArray[1:self.size]
+
+        self.TicklastPriceArray[-1] = tick.lastPrice
+        self.TickaskVolume1Array[-1] = tick.askVolume1
+        self.TickbidVolume1Array[-1] = tick.bidVolume1
+        self.TickaskPrice1Array[-1] = tick.askPrice1
+        self.TickbidPrice1Array[-1] = tick.bidPrice1
+        self.TickopenInterestArray[-1] = tick.openInterest
+        self.TickvolumeArray[-1] = tick.volume
+
+    def askBidVolumeDif(self):
+        return (self.TickaskPrice1Array.sum() - self.TickbidVolume1Array.sum())
