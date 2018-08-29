@@ -167,18 +167,7 @@ class WHMikeStrategy(CtaTemplate):
         #self.sendQmail("strategy whmike start","strategy whmike start")
         #self.writeCtaLog(u'%s发送邮件成功' % self.name)
 
-        #import history am.data
-        am = self.am
-        temp_bar = VtBarData()
-        for line in self.hisbar:
-            temp_bar.open = line[1]
-            temp_bar.high = line[2]
-            temp_bar.low = line[3]
-            temp_bar.close = line[4]
-            temp_bar.volume = line[5]
-            am.updateBar(temp_bar)
-        self.writeCtaLog(u'%s 装载历史数据成功' % self.hisbar.__len__())
-        print(am.inited)
+
 
     #----------------------------------------------------------------------
     def on30minBar(self, bar):
@@ -253,6 +242,8 @@ class WHMikeStrategy(CtaTemplate):
         
         am.updateBar(bar)
         print(231)
+        print(am.count)
+
         if not am.inited:
             return
         #var_dump(self)
@@ -306,9 +297,9 @@ class WHMikeStrategy(CtaTemplate):
 
         self.nowdate = bar.datetime
         self.writeCtaLog(u'% Len 143' % self.line143.__len__())
-        self.writeCtaLog(u'% min0' % min0)
-        self.writeCtaLog(u'% max0' % max0)
-        self.writeCtaLog(u'% bar close' % bar.close)
+#        self.writeCtaLog(u'% min0' % min0)
+#        self.writeCtaLog(u'% max0' % max0)
+#        self.writeCtaLog(u'% bar close' % bar.close)
         if self.line143.__len__() < 144:
             return
         self.writeCtaLog(u'%sonXminBar成功2' % self.name)
