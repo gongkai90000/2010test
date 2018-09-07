@@ -44,7 +44,7 @@ class WHMikeStrategy(CtaTemplate):
     cciWindow = 10                      # CCI窗口数
     atrWindow = 30                      # ATR窗口数
     slMultiplier = 5.2                  # 计算止损距离的乘数
-    initDays = 10                       # 初始化数据所用的天数
+    initDays = 30                       # 初始化数据所用的天数
     fixedSize = 1                       # 每次交易的数量
 
     # 策略变量
@@ -140,7 +140,7 @@ class WHMikeStrategy(CtaTemplate):
                 self.writeCtaLog(u'%s装载历史数据成功' % self.name)
                 print(self.coarray)
         else:
-            os.remove(self.future_code + self.csvfile)
+           # os.remove(self.future_code + self.csvfile)
             #self.future_code = 'M0'
             url_str = ('http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=' + self.future_code)
             r = requests.get(url_str)
@@ -158,11 +158,11 @@ class WHMikeStrategy(CtaTemplate):
             lines = csv.reader(cf)
             for line in lines:
                 vv=(float(line[4])+float(line[1]))/2
-                self.coarray.insert(0, vv)
-                self.line143.insert(0, line[4])
-                self.hisbar.insert(0, line)
+                #self.coarray.insert(0, vv)
+                #self.line143.insert(0, line[4])
+                #self.hisbar.insert(0, line)
             self.writeCtaLog(u'%s装载历史数据成功' % self.name)
-            print(self.coarray)
+            print(self.coarray.__len__())
             # http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0
         #self.sendQmail("strategy whmike start","strategy whmike start")
         #self.writeCtaLog(u'%s发送邮件成功' % self.name)
@@ -231,7 +231,7 @@ class WHMikeStrategy(CtaTemplate):
     #----------------------------------------------------------------------
     def onXminBar(self, bar):
         self.writeCtaLog(u'%s onXminBar成功1' % self.name)
-        self.sendQmail("15 min ok ",  "ok")
+        #self.sendQmail("15 min ok ",  "ok")
         """收到X分钟K线"""
 
         # 全撤之前发出的委托
@@ -241,8 +241,15 @@ class WHMikeStrategy(CtaTemplate):
         am = self.am
         
         am.updateBar(bar)
-        print(231)
-        print(am.count)
+        #print(231)
+        print("初始化：" + str(am.count) + " line: " + str(self.line143.__len__()) + " coarray: " + str(self.coarray.__len__()) )
+        if self.line143.__len__() > 300:
+            del (self.line143[0])
+            del (self.coarray[0])
+            return
+        #self.nowline143 = self.line143[-1]
+        self.line143.append(float(bar.close))
+        self.coarray.append((bar.close + bar.open) / 2)
 
         if not am.inited:
             return
@@ -254,11 +261,12 @@ class WHMikeStrategy(CtaTemplate):
         self.bollUp, self.bollDown = am.boll(self.bollWindow, self.bollDev)
         self.cciValue = am.cci(self.cciWindow)
         self.atrValue = am.atr(self.atrWindow)
-        print(242)
+        #print(242)
 
         # 判断是否要进行交易
-        del(self.coarray[0])
-        self.coarray.append((bar.close+bar.open)/2)
+
+
+
         cop = np.array(self.coarray)
         # mike add sma #
         # NN1:=VALUEWHEN(DATE<>REF(DATE,1),REF(MA(KK,47),1));#
@@ -276,7 +284,7 @@ class WHMikeStrategy(CtaTemplate):
         nn3array = ta.SMA(cop, 34)
         nn3 = nn3array[-1]
         self.firstN3=nn3
-        print(264)
+        #print(264)
         #
         #MAXM:=MAX(NN1, NN2);
         #MAX0:=MAX(MAXM, NN3);
@@ -292,26 +300,24 @@ class WHMikeStrategy(CtaTemplate):
         #KEY:=(MAX0+MIN0)/2;//
         mkey=(maxa-mina)/2
         #MA1:=MA(C,143);
-        if bar.close>0:
-            self.line143.append(bar.close)
+        # if bar.close>0:
+        #   self.line143.append(bar.close)
 
         self.nowdate = bar.datetime
-        self.writeCtaLog(u'% Len 143' % self.line143.__len__())
+        #self.writeCtaLog(u'% Len 143' % self.line143.__len__())
 #        self.writeCtaLog(u'% min0' % min0)
 #        self.writeCtaLog(u'% max0' % max0)
 #        self.writeCtaLog(u'% bar close' % bar.close)
-        if self.line143.__len__() < 144:
-            return
+
+        #print(self.line143.__len__())
         self.writeCtaLog(u'%sonXminBar成功2' % self.name)
         #del self.line143[0]
-        del(self.line143[0])
-        self.nowline143=self.line143[-1]
 
-        self.line143.append(bar.close)
+
 
         p=np.array(self.line143)
         ma1 = ta.SMA(p, 143)
-
+      #  ma1 = ta.SMA(self.line143, 143)
 
 
         #ma1=am.sma(143,1)
@@ -333,13 +339,12 @@ class WHMikeStrategy(CtaTemplate):
         marr=[]
         marr.append(ma1[-1])
         marr.append(ma1[-2])
+        print("max: " + str(round(max(xarr),2)) + " min: " + str(round(min(marr),2)) + " mkey: "+ str(mkey) + " firstC:" + str(self.firstC) + " bc: "+ str(bar.close))
 
-        diffma1=max(xarr)-min(marr)
+        diffma1=round(max(xarr),2)-round(min(marr),2)
         diffma2=float(diffma1)
         if [self.firstC<1]:
             self.firstC=bar.close
-
-
 
         #AA:=C>KEY AND C>VALUEWHEN(DATE<>REF(DATE,1),C);
         if [bar.close>mkey and bar.close>self.firstC]:
@@ -351,9 +356,6 @@ class WHMikeStrategy(CtaTemplate):
             bb=True
         else:
             bb=False
-        bcb=datetime.strptime("2017-05-11 14:15:00", "%Y-%m-%d %H:%M:%S")
-        if bar.datetime == bcb:
-            bbb=0
 
         # 当前无仓位，发送开仓委托
         if self.pos == 0:
@@ -380,14 +382,14 @@ class WHMikeStrategy(CtaTemplate):
                 self.buy(self.bollUp, self.fixedSize, True)
                 self.bkprice=bar.close
                 self.barsbk = 1
-                self.sendQmail("buy1 ok ", "ok")
+                self.sendQmail("没有仓位buy ok " + str(self.bollUp), "ok ")
 
 
             elif bb and ifsellb and ifsellc:
                 self.short(self.bollDown, self.fixedSize, True)
                 self.skprice=bar.close
                 self.barssk = 1
-                self.sendQmail("sell0 ok ", "ok")
+                self.sendQmail("没有仓位sell ok " + str(self.bollDown), "ok")
 
 
         #用法:BKPRICE返回最近一次模型买开位置的买开信号价位。
@@ -413,17 +415,17 @@ class WHMikeStrategy(CtaTemplate):
             if [aa and (self.skprice - bar.close >0 or self.skprice-bar.close<-1*(bar.close/100)) and self.barssk>1]:
                 self.sell(self.longStop, abs(self.pos), True)
                 self.barsbk=0
-                self.sendQmail("sell1 ok ", "ok")
+                self.sendQmail("持有多头仓位买平1 " + str(self.longStop), "ok")
             # C > SKLOW * (1 + 0.001 * 35), BP;
             if [bar.close > self.sklow * (1 + 0.001 * 35)]:
                 self.sell(self.longStop, abs(self.pos), True)
                 self.barsbk = 0
-                self.sendQmail("sell2 ok ", "ok")
+                self.sendQmail("持有多头仓位买平2 " + str(self.longStop), "ok")
             #C < SKPRICE * (1 - 0.001 * 91), BP;
             if [bar.close < self.skprice * (1 - 0.001 * 91)]:
                 self.sell(self.longStop, abs(self.pos), True)
                 self.barsbk = 0
-                self.sendQmail("sell3 ok ", "ok")
+                self.sendQmail("持有多头仓位买平3 " + str(self.longStop), "ok")
 
         # 持有空头仓位
         elif self.pos < 0:
@@ -437,17 +439,17 @@ class WHMikeStrategy(CtaTemplate):
             if [bb and (bar.close-self.bkprice>0 or bar.close-self.bkprice<-1*(bar.close/100)) and self.barsbk>37]:
                 self.cover(self.shortStop, abs(self.pos), True)
                 self.barssk = 0
-                self.sendQmail("pingkong1 ok ", "ok")
+                self.sendQmail("持有空头仓位买平3 " + str(self.longStop), "ok")
             # C < BKHIGH * (1 - 0.001 * 40), SP;
             if [bar.close < self.bkhigh * (1 - 0.001 * 40)]:
                 self.cover(self.longStop, abs(self.pos), True)
                 self.barssk = 0
-                self.sendQmail("pingkong2 ok ", "ok")
+                self.sendQmail("持有空头仓位买平3 " + str(self.longStop), "ok")
             # C > BKPRICE * (1 + 0.001 * 85), SP
             if [bar.close > self.bkprice * (1 + 0.001 * 85)]:
                 self.cover(self.longStop, abs(self.pos), True)
                 self.barssk = 0
-                self.sendQmail("pingkong3 ok ", "ok")
+                self.sendQmail("持有空头仓位买平3 " + str(self.longStop), "ok")
             #BKHIGH 买开仓以来的最高价
         #C >= SKPRICE * (1 + 0.0001 * 130), BP; //
         #C <= BKPRICE * (1 - 0.0001 * 185), SP; //

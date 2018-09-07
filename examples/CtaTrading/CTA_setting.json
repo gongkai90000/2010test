@@ -1,10 +1,5 @@
 [
     {
-        "name": "Pankou",
-        "className": "TickOneStrategy",
-        "vtSymbol": "TA901"
-    },
-    {
         "name": "mikegong",
         "className": "WHMikeStrategy",
         "vtSymbol": "rb1901"

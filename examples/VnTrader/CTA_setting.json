@@ -1,25 +1,12 @@
 [
     {
-        "name": "double ema",
-        "className": "DoubleMaStrategy",
-        "vtSymbol": "rb1805"
+        "name": "Pankou",
+        "className": "TickOneStrategy",
+        "vtSymbol": "TA901"
     },
-
-    {
-        "name": "atr rsi",
-        "className": "AtrRsiStrategy",
-        "vtSymbol": "IC1802"
-    },
-
-    {
-        "name": "king keltner",
-        "className": "KkStrategy",
-        "vtSymbol": "IH1802"
-    } ,
-
     {
         "name": "mikegong",
         "className": "WHMikeStrategy",
-        "vtSymbol": "rb1810"
+        "vtSymbol": "rb1901"
     }
 ]
