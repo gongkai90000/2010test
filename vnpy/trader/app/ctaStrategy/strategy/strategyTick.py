@@ -22,6 +22,8 @@ class TickOneStrategy(CtaTemplate):
     fixedSize = 1
     Ticksize = 10
     initDays = 0
+    intraTradeHigh = 0  # 持仓期内的最高点
+    intraTradeLow = 0  # 持仓期内的最低点
 
     DAY_START = time(9, 00)  # 日盘启动和停止时间
     DAY_END = time(14, 58)
@@ -96,8 +98,7 @@ class TickOneStrategy(CtaTemplate):
 
         currentTime = datetime.now().time()
         # 平当日仓位, 如果当前时间是结束前日盘15点28分钟,或者夜盘10点58分钟，如果有持仓，平仓。
-        if ((currentTime >= self.DAY_START and currentTime <= self.DAY_END) or
-                (currentTime >= self.NIGHT_START and currentTime <= self.NIGHT_END)):
+        if ((currentTime >= self.DAY_START and currentTime <= self.DAY_END) or (currentTime >= self.NIGHT_START and currentTime <= self.NIGHT_END)):
             TA = self.tickArray
             TA.updateTick(tick)
             if not TA.inited:
@@ -116,7 +117,7 @@ class TickOneStrategy(CtaTemplate):
 
             elif self.pos > 0:
                 # 如果持有多单，如果已经是买入价格正向N3个点，再次判断趋势，如果已经不符合，市价卖出。如果持有，清掉之前阻止单，改挂当前价位反向2个点阻止单。
-                if tick.lastprice - self.posPrice >= 3:
+                if tick.lastPrice - self.posPrice >= 3:
                     if TA.askBidVolumeDif() < 0:
                         self.cancelAll()
                         self.sell(tick.lastPrice - 2, self.fixedSize, True)
@@ -139,10 +140,11 @@ class TickOneStrategy(CtaTemplate):
                         print(138)
         else:
             if self.pos > 0:
-                self.sell(tick.close, abs(self.pos), False)
+                #preClosePrice
+                self.sell(tick.highPrice, abs(self.pos), False)
                 print(142)
             elif self.pos < 0:
-                self.cover(tick.close, abs(self.pos), False)
+                self.cover(tick.Price, abs(self.pos), False)
                 print(145)
             elif self.pos == 0:
                 return

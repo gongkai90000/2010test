@@ -76,6 +76,7 @@ class WHMikeStrategy(CtaTemplate):
     csvfile="csvfile.csv"               #历史存储csv
     future_code = 'M0'                  #历史的品种
     hisbar = []                            #历史
+    isinit = 0                          #0not init 1 initing
 
     # 参数列表，保存了参数的名称
     paramList = ['name',
@@ -178,13 +179,15 @@ class WHMikeStrategy(CtaTemplate):
     def onInit(self):
         """初始化策略（必须由用户继承实现）"""
         self.writeCtaLog(u'%s策略初始化' %self.name)
-        
+        self.isinit=1
         # 载入历史数据，并采用回放计算的方式初始化策略数值
         initData = self.loadBar(self.initDays)
         for bar in initData:
             self.onBar(bar)
 
         self.putEvent()
+        self.isinit = 0
+        self.writeCtaLog(u'%s策略初始化OK!!!!!!!' % self.name)
 
     def sendQmail(self,subject,msg):
         """发送邮件"""
@@ -242,7 +245,8 @@ class WHMikeStrategy(CtaTemplate):
         
         am.updateBar(bar)
         #print(231)
-        print("初始化：" + str(am.count) + " line: " + str(self.line143.__len__()) + " coarray: " + str(self.coarray.__len__()) )
+        out = "init: " + str(am.count) + " line: " + str(self.line143.__len__()) + " coarray: " + str(self.coarray.__len__())
+        self.writeCtaLog(u'%s' % out)
         if self.line143.__len__() > 300:
             del (self.line143[0])
             del (self.coarray[0])
@@ -356,7 +360,11 @@ class WHMikeStrategy(CtaTemplate):
             bb=True
         else:
             bb=False
-
+        if self.isinit>0:
+            print("init trade " + str(self.isinit))
+            return
+        else:
+            print("start trade "+ str(self.isinit))
         # 当前无仓位，发送开仓委托
         if self.pos == 0:
             self.intraTradeHigh = bar.high
